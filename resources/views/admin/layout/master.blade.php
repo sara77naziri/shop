@@ -902,8 +902,8 @@
 
         <!-- Main content -->
         <section class="content">
-        @yield('content')
-        <!-- /.row -->
+            @yield('content')
+            <!-- /.row -->
         </section>
         <!-- /.content -->
     </div>

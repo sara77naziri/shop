@@ -12,17 +12,17 @@
                                     <ul>
                                         @foreach($category->children as $childCategory)
                                             <li><a href="category.html">{{$childCategory->title}} @if($childCategory->children->count() > 0) <span>&rsaquo;</span> @endif</a>
-                                                @if($childCategory->children->count() > 0)
-                                                    <div class="dropdown-menu">
-                                                        <ul>
-                                                            @foreach($childCategory->children as $subCategory)
-                                                                <li><a href="category.html">{{$subCategory->title}}</a></li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                @endif
-                                                @endforeach
-                                            </li>
+                                            @if($childCategory->children->count() > 0)
+                                                <div class="dropdown-menu">
+                                                    <ul>
+                                                        @foreach($childCategory->children as $subCategory)
+                                                            <li><a href="category.html">{{$subCategory->title}}</a></li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                        </li>
 
                                     </ul>
                                 </div>
