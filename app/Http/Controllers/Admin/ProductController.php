@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -78,7 +79,14 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return redirect(route('products.index'));
+
+    return view('admin.products.edit',[
+
+        'categories'=>Category::all(),
+        'brands'=>Brand::all(),
+        'product'=>$product
+    ]);
+
     }
 
     /**
@@ -86,21 +94,47 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductUpdateRequest $request, Product $product)
     {
-        //
+
+        $slugExists=Product::query()->where('slug',$request->get('slug'))
+            ->where('id', '!=','$product->id')
+            ->exists();
+        if($slugExists){
+            return back()->withErrors(['slug'=>'اسلاگ موجود است']);
+        }
+
+
+        $path=$product->image;
+        if($request->hasFile('image')){
+
+            $path=$request->file('image')->storeAs('public/image',$request->file('image')->getClientOriginalName());
+
+        }
+        $product->update([
+            'name'=>$request->get('name' ,$product->name),
+            'category_id'=>$request->get('category_id' ,$product->category_id),
+            'brand_id'=>$request->get('brand_id' ,$product->brand_id),
+            'cost'=>$request->get('cost' ,$product->cost),
+            'slug'=>$request->get('slug' ,$product->slug),
+            'description'=>$request->get('description' ,$product->description),
+            'image'=>$path,
+
+        ]);
+        return redirect(route('products.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect(route('products.index'));
     }
 }

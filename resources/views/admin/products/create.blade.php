@@ -23,7 +23,9 @@
                             <select name="category_id" id="category_id" class="form-control">
                                 <option value="" disabled selected>دسته بندی را انتخاب کنید ..</option>
                                 @foreach($categories as $category)
-                                    <option value="{{$category->id}}"> {{$category->title}} </option>
+                                    <option
+
+                                        value="{{$category->id}}"> {{$category->title}} </option>
                                 @endforeach
                             </select>
                         </div>
