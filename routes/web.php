@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Client\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,8 +43,17 @@ Route::prefix('/adminpanel')->group(function () {
 });
 
 Route::prefix('')->name('client.')->group(function () {
-    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/', [HomeController::class, 'index'])->name('index');
+
 
     Route::get('/products/{product}', [ClientProductController::class ,'show'])->name('products.show');
+
+    Route::get('/register', [RegisterController::class ,'create'])->name('register');
+    Route::post('/register/sendMail', [RegisterController::class ,'sendMail'])->name('register.sendMail');
+    Route::get('/register/otp/{user}', [RegisterController::class ,'otp'])->name('register.otp');
+    Route::post('/register/verifyOtp/{user}', [RegisterController::class ,'verifyOtp'])->name('register.verifyOtp');
+
+
+
 
 });
