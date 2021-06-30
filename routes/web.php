@@ -52,6 +52,8 @@ Route::prefix('')->name('client.')->group(function () {
     Route::post('/register/sendMail', [RegisterController::class ,'sendMail'])->name('register.sendMail');
     Route::get('/register/otp/{user}', [RegisterController::class ,'otp'])->name('register.otp');
     Route::post('/register/verifyOtp/{user}', [RegisterController::class ,'verifyOtp'])->name('register.verifyOtp');
+    Route::delete('/logout', [RegisterController::class ,'logout'])->name('logout');
+
 
 
 

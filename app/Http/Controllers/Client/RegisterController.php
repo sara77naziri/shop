@@ -27,12 +27,22 @@ class RegisterController extends Controller
 
         $otp=random_int(11111,99999);
 
-    $user=null;
-        $user=User::query()->create([
-            'email'=>$request->get('email'),
-            'role_id'=>Role::findByTitle('user')->id,
-            'password'=>bcrypt($otp),
-        ]);
+         $user=null;
+         $userQuery=User::query()->where('email',$request->get('email'));
+         if($userQuery->exists()){
+             $user=$userQuery->first();
+             $user->update([
+                 'password'=>bcrypt($otp)
+             ])           ;
+         }
+         else{
+             $user=User::query()->create([
+                 'email'=>$request->get('email'),
+                 'role_id'=>Role::findByTitle('user')->id,
+                 'password'=>bcrypt($otp),
+             ]);
+         }
+
 
         //send otp by email to user
         Mail::to($user->email)->send(new OtpMail($otp));
@@ -56,4 +66,9 @@ class RegisterController extends Controller
         else{ auth()->login($user);
             return redirect(route('client.index'));
     }}
+
+    public function logout(){
+        auth()->logout();
+        return redirect(route('client.index'));
+    }
 }
