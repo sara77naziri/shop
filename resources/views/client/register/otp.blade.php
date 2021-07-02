@@ -20,7 +20,7 @@
                             <div class="box">
                                 <div class="box-body">
                                     <p>اگر قبلا حساب کاربریتان را ایجاد کرد اید جهت ورود به <a href="login.html">صفحه لاگین</a> مراجعه کنید.</p>
-                                    <form class="form-horizontal" action="{{route('client.register.verifyOtp',$user)}}" method="post">
+                                    <form class="form-horizontal" action="{{route('client.register.verifyOtp',$user)}}" method="post" >
                                         @csrf
                                         <fieldset id="account">
                                             <legend>اطلاعات شخصی شما</legend>
@@ -39,7 +39,7 @@
                                             <div class="form-group">
                                                 <label for="email">کد ارسال شده را وارد کنید :</label>
 
-                                                <input type="text" name="otp" id="otp" class="form-control">
+                                                <input type="text" name="otp" id="otp" class="form-control" placeholder="کد یکبار مصرف">
                                             </div>
                                             <div class="form-group">
                                                 <input type="submit" name="submit" id="submit" value="ارسال کد" class="btn btn-primary">

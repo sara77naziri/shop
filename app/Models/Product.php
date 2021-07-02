@@ -67,8 +67,15 @@ class Product extends Model
 
     public function costWithDiscount(){
         if($this->discount()->exists()){
-            return $this->cost -$this->cost * $this->discount->value /100;
+            return $this->cost - $this->cost * $this->discount->value /100;
         }
+    }
+
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class)
+            ->withPivot('value')
+            ->withTimestamps();
     }
 
 }

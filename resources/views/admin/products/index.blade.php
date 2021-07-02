@@ -25,8 +25,11 @@
                                 <th>اسلاگ محصول </th>
                                 <th>توضیحات محصول </th>
 
+
                                 <th>تصویر</th>
                                 <th>گالری</th>
+                                <th>ویژگی ها</th>
+
                                 <th>تخفیف</th>
                                 <th>ویرایش</th>
                                 <th>حذف</th>
@@ -48,6 +51,10 @@
 
                                     <td>
                                         <a href="{{route('products.pictures.index', $product)}}" class="btn btn-sm btn-primary">گالری </a>
+                                    </td>
+
+                                    <td>
+                                        <a href="{{route('product.properties.index', $product)}}" class="btn btn-sm btn-primary">ویژگی ها </a>
                                     </td>
                                     <td>
                                         @if(!$product->discount()->exists())

@@ -23,20 +23,33 @@ class Category extends Model
         return $this->hasMany(Category::class, 'category_id');
     }
 
-    public function products()
+    public function products(): HasMany
     {
-        return $this->hasMany(Product::class, 'category_id');
+        return $this->hasMany(Product::class);
     }
+
+
+
 
     public function AllSubCategoryProducts()
 
     {
         $childrenId= $this->children()->pluck('id');
-
         return Product::query()
             ->whereIn('category_id',$childrenId)
             ->orWhere('category_id', $this->id)
             ->get();
     }
 
+    public function propertyGroups(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(PropertyGroup::class);
+    }
+
+
+
+public function hasPropertyGroup(PropertyGroup  $propertyGroup){
+        return $this->propertyGroups()->where('property_group_id',$propertyGroup->id)
+            ->exists();
+}
 }

@@ -12,6 +12,12 @@
                 <div class="box-body">
                     <form action="{{route('categories.store')}}" method="post">
                         @csrf
+
+
+                        <div class="form-group">
+                            <label for="title">عنوان</label>
+                            <input type="text" class="form-control" name="title" id="title">
+                        </div>
                         <div class="form-group">
                             <label for="category_id">دسته والد</label>
                             <select name="category_id" id="category_id" class="form-control">
@@ -21,9 +27,18 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="form-group">
-                            <label for="title">عنوان</label>
-                            <input type="text" class="form-control" name="title" id="title">
+                            <label for="category_id">اتخاب گروه ویژگی </label>
+                        @foreach($properties_group as $property_group)
+                            <div class="form-check">
+                                <label class="form-check-label" >
+                                    <input style="opacity: 1 !important; position: static !important; left: 0;right: 0;" class="form-check-input" type="checkbox" name="properties[]" value="{{$property_group->id}}">
+                                    {{$property_group->title}}
+
+                                </label>
+                            </div>
+                        @endforeach
                         </div>
 
                         <div class="form-group">

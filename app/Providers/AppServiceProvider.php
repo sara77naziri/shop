@@ -28,8 +28,13 @@ class AppServiceProvider extends ServiceProvider
     {
 //        'categories' => Category::query()->where('category_id',null )->get(),
 //        'brands'=>Brand::all(),
-        View::share('categories',Category::query()->where('category_id',null )->get());
-        View::share('brands',Brand::all());
-
+//        View::share('categories',Category::query()->where('category_id',null )->get());
+//        View::share('brands',Brand::all());
+        view()->composer('client.*',function($view){
+            $view->with([
+                'categories' => Category::query()->where('category_id',null )->get(),
+                'brands'=>Brand::all(),
+            ]);
+    });
     }
 }

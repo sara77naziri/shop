@@ -236,6 +236,7 @@
                     <h3 class="subtitle">دسته ها</h3>
                     <div class="box-category">
                         <ul id="cat_accordion">
+
                             <li><a href="category.html">البسه</a> <span class="down"></span>
                                 <ul>
                                     <li><a href="category.html">آقایان</a> <span class="down"></span>
@@ -264,6 +265,13 @@
                                     </li>
                                 </ul>
                             </li>
+
+
+
+
+
+
+
                             <li><a href="category.html">الکترونیکی</a> <span class="down"></span>
                                 <ul>
                                     <li><a href="category.html">لپ تاپ</a> <span class="down"></span>

@@ -14,6 +14,12 @@
                         @csrf
                         @method('PATCH')
                         <div class="form-group">
+                            <label for="title">عنوان</label>
+                            <input type="text" class="form-control" name="title" id="title" value="{{$category->title}}">
+                        </div>
+
+
+                        <div class="form-group">
                             <label for="category_id">دسته والد</label>
                             <select name="category_id" id="category_id" class="form-control">
                                 <option value="" disabled selected>دسته والد را انتخاب کنید ..</option>
@@ -26,9 +32,30 @@
                                 @endforeach
                             </select>
                         </div>
+
+
+
+
                         <div class="form-group">
-                            <label for="title">عنوان</label>
-                            <input type="text" class="form-control" name="title" id="title" value="{{$category->title}}">
+                            <label>اتخاب گروه ویژگی </label>
+                            @foreach($properties as $property)
+                                <div class="form-check">
+                                    <label class="form-check-label" >
+                                        <input  @if($category->hasPropertyGroup($property))
+                                                checked
+                                                @endif
+
+                                            style="opacity: 1 !important; position: static !important; left: 0;right: 0;" class="form-check-input" type="checkbox"
+
+
+
+
+                                            name="properties[]" value="{{$property->id}}">
+                                        {{$property->title}}
+
+                                    </label>
+                                </div>
+                            @endforeach
                         </div>
 
                         <div class="form-group">

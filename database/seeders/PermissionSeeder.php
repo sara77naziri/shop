@@ -188,23 +188,17 @@ class PermissionSeeder extends Seeder
         /**
          * viewDashboard
          */
+
         Permission::query()->insert([
 
                 [
-                    'title'=>'read_dashboard',
+                    'title'=>'view_dashboard',
                     'label'=>'مشاهده داشبورد',
                 ],
 
 
             ]
         );
-
-
-
-
-
-
-
 
 
     }
