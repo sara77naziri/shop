@@ -49,6 +49,7 @@
                                     @endif
                                         <li></li>
                                 </ul>
+
                                 <div id="product">
                                     <h3 class="subtitle">انتخاب های در دسترس</h3>
                                     <div class="form-group required">
@@ -90,11 +91,15 @@
                                 <!-- AddThis Button END -->
                             </div>
                         </div>
+
+
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab-description" data-toggle="tab">توضیحات</a></li>
                             <li><a href="#tab-specification" data-toggle="tab">مشخصات</a></li>
-                            <li><a href="#tab-review" data-toggle="tab">بررسی (2)</a></li>
+                            <li><a href="#tab-review" data-toggle="tab"> بررسی ({{$product->comments->count()}})</a></li>
                         </ul>
+
+
                         <div class="tab-content">
                             <div itemprop="description" id="tab-description" class="tab-pane active">
                                 <div>
@@ -108,100 +113,71 @@
                                     <p>بدون نیاز به ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
                                 </div>
                             </div>
-                            <div id="tab-specification" class="tab-pane">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <td colspan="2"><strong>حافظه</strong></td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>تست 1</td>
-                                        <td>8gb</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <td colspan="2"><strong>پردازشگر</strong></td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>تعداد هسته</td>
-                                        <td>1</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+
+                            @php
+                                $propertyGroups = $product->category->propertyGroups;
+                            @endphp
+
+
                             <div id="tab-review" class="tab-pane">
-                                <form class="form-horizontal">
-                                    <div id="review">
-                                        <div>
+
+                                <div id="review">
+                                    <div>
+                                        @foreach($product->comments()->latest()->get() as $comment)
                                             <table class="table table-striped table-bordered">
                                                 <tbody>
                                                 <tr>
-                                                    <td style="width: 50%;"><strong><span>هاروی</span></strong></td>
-                                                    <td class="text-right"><span>1395/1/20</span></td>
+                                                    <td style="width: 50%;"><strong><span>{{$comment->user->name}}</span></strong></td>
+                                                    <td class="text-right"><span>{{$comment->created_at->diffForHumans()}}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2"><p>ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+                                                    <td colspan="2"><p>{{$comment->content}}</p>
                                                         <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> </div></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
-                                            <table class="table table-striped table-bordered">
-                                                <tbody>
-                                                <tr>
-                                                    <td style="width: 50%;"><strong><span>اندرسون</span></strong></td>
-                                                    <td class="text-right"><span>1395/1/20</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2"><p>ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
-                                                        <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> </div></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                        @endforeach
+
+                                    </div>
+                                    <div class="text-right"></div>
+                                </div>
+                                <h2>یک بررسی بنویسید</h2>
+
+                                @auth()
+                                    <form action="{{route('client.products.comments.store', $product)}}" method="POST">
+                                        @csrf()
+                                        <div class="form-group required">
+                                            <div class="col-sm-12">
+                                                <label for="content" class="control-label">بررسی شما</label>
+                                                <textarea class="form-control" id="content" rows="5" name="content"></textarea>
+                                            </div>
                                         </div>
-                                        <div class="text-right"></div>
-                                    </div>
-                                    <h2>یک بررسی بنویسید</h2>
-                                    <div class="form-group required">
-                                        <div class="col-sm-12">
-                                            <label for="input-name" class="control-label">نام شما</label>
-                                            <input type="text" class="form-control" id="input-name" value="" name="name">
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-primary btn-sm" value="ثبت دیدگاه">
                                         </div>
+                                    </form>
+                                @endauth
+                                <div class="form-group required">
+                                    <div class="col-sm-12">
+                                        <label class="control-label">رتبه</label>
+                                        &nbsp;&nbsp;&nbsp; بد&nbsp;
+                                        <input type="radio" value="1" name="rating">
+                                        &nbsp;
+                                        <input type="radio" value="2" name="rating">
+                                        &nbsp;
+                                        <input type="radio" value="3" name="rating">
+                                        &nbsp;
+                                        <input type="radio" value="4" name="rating">
+                                        &nbsp;
+                                        <input type="radio" value="5" name="rating">
+                                        &nbsp;خوب</div>
+                                </div>
+                                <div class="buttons">
+                                    <div class="pull-right">
+                                        <button class="btn btn-primary" id="button-review" type="button">ادامه</button>
                                     </div>
-                                    <div class="form-group required">
-                                        <div class="col-sm-12">
-                                            <label for="input-review" class="control-label">بررسی شما</label>
-                                            <textarea class="form-control" id="input-review" rows="5" name="text"></textarea>
-                                            <div class="help-block"><span class="text-danger">توجه :</span> HTML بازگردانی نخواهد شد!</div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group required">
-                                        <div class="col-sm-12">
-                                            <label class="control-label">رتبه</label>
-                                            &nbsp;&nbsp;&nbsp; بد&nbsp;
-                                            <input type="radio" value="1" name="rating">
-                                            &nbsp;
-                                            <input type="radio" value="2" name="rating">
-                                            &nbsp;
-                                            <input type="radio" value="3" name="rating">
-                                            &nbsp;
-                                            <input type="radio" value="4" name="rating">
-                                            &nbsp;
-                                            <input type="radio" value="5" name="rating">
-                                            &nbsp;خوب</div>
-                                    </div>
-                                    <div class="buttons">
-                                        <div class="pull-right">
-                                            <button class="btn btn-primary" id="button-review" type="button">ادامه</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
+
                             </div>
                         </div>
                         <h3 class="subtitle">محصولات مرتبط</h3>

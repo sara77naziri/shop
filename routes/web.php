@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\PropertyController;
 use App\Http\Controllers\Admin\PropertyGroupController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\client\CommentController;
+use App\Http\Controllers\client\CommentController as AdminCommentController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\RegisterController;
@@ -44,6 +46,9 @@ Route::prefix('')->name('client.')->group(function () {
     Route::post('/register/verifyOtp/{user}', [RegisterController::class ,'verifyOtp'])->name('register.verifyOtp');
     Route::delete('/logout', [RegisterController::class ,'logout'])->name('logout');
 
+    Route::post('/products/{product}/comments/store',[CommentController::class , 'store'])->name('products.comments.store');
+
+
 
 
 
@@ -74,6 +79,8 @@ Route::prefix('/adminpanel')->group(function () {
  Route::post('/products/{product}/properties',[ProductPropertyController::class , 'store'])->name('product.properties.store');
     Route::get('/products/{product}/properties/create',[ProductPropertyController::class , 'create'])->name('product.properties.create');
 
+    Route::get('/products/{product}/comments/index',[AdminCommentController::class , 'index'])->name('product.comments.index');
+    Route::delete('/comments/destroy',[AdminCommentController::class , 'destroy'])->name('comments.destroy');
 
 
 

@@ -56,6 +56,10 @@
                                     <td>
                                         <a href="{{route('product.properties.index', $product)}}" class="btn btn-sm btn-primary">ویژگی ها </a>
                                     </td>
+
+                                    <td>
+                                        <a href="{{route('product.comments.index', $product)}}" class="btn btn-sm btn-primary">کامنت ها </a>
+                                    </td>
                                     <td>
                                         @if(!$product->discount()->exists())
                                         <a href="{{route('products.discounts.create', $product)}}" class="btn btn-sm btn-primary">تخفیف </a>
